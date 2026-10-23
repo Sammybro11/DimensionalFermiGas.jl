@@ -1,0 +1,37 @@
+=== Part A: continuum ideal Fermi gas ===
+d = 3  Microcanonical:  E = 39981.2630  ->  T = 17.788831,  μ = 37.314588,  S = 1648.2730
+d = 3  Canonical:       ⟨E⟩(T) = 39981.263022   (match: 0.00e+00 relative error)
+d = 3  Grand canonical: ⟨N⟩ = 1000.000000 (match: 1.14e-16),  ⟨E⟩ = 39981.263022
+
+d = 4  Microcanonical:  E = 39738.3531  ->  T = 14.429613,  μ = 30.697749,  S = 2003.5035
+d = 4  Canonical:       ⟨E⟩(T) = 39738.353063   (match: 0.00e+00 relative error)
+d = 4  Grand canonical: ⟨N⟩ = 1000.000000 (match: 1.14e-16),  ⟨E⟩ = 39738.353063
+
+=== Part A2: 3D harmonic trap (N = 1000, ħω = 1) ===
+trap d = 3  Microcanonical:  E = 16225.3077  ->  T = 4.359056,  μ = 10.156130
+trap d = 3  Canonical: ⟨E⟩ = 16225.307666 (match: 0.00e+00),  Grand canonical: ⟨N⟩ = 1000.000000 (match: 2.27e-16)
+
+=== Part A3: low-temperature Fermi-integral point (T/εF = 0.05) ===
+d = 3  Fermi integrals:  T/εF = 0.05  ->  T = 2.221181,  μ = 44.331938,  U = 26927.1740,  S = 246.1235
+d = 4  Fermi integrals:  T/εF = 0.05  ->  T = 1.986918,  μ = 39.574598,  U = 26817.0495,  S = 327.6311
+trap d = 3  Fermi integrals:  T/εF = 0.05  ->  T = 0.721125,  μ = 14.303878,  U = 10993.5053,  S = 491.0786
+
+=== Part B: exact small discrete system (1D box, spinless fermions) ===
+Chosen (N, E) = (2, 6.4374) at T = 3.000
+  Ω(N=2, E= 5) = 1
+  Ω(N=2, E=10) = 1
+  Ω(N=2, E=13) = 1
+  Ω(N=2, E=17) = 1
+  Ω(N=2, E=20) = 1
+  Ω(N=2, E=25) = 1
+Canonical:  T(E) = 3.000000,  ⟨E⟩ = 6.437360  (match: 0.00e+00)
+Grand canonical: μ = 7.007751 -> ⟨N⟩ = 2.000000 (match: 0.00e+00),  ⟨E⟩ = 7.626423 vs canonical 6.437360
+
+=== Part C: exact microcanonical T from pure state counting (1D trap, ħω = 1) ===
+(T from the slope of ln Ω alone, no canonical input; canonical T0 = 4.0)
+L = 10, N =  5:  T_boltzmann = 4.382 ( +9.5%)   T_gibbs = 3.256 (-18.6%)
+L = 16, N =  8:  T_boltzmann = 3.871 ( -3.2%)   T_gibbs = 3.634 ( -9.2%)
+L = 22, N = 11:  T_boltzmann = 3.744 ( -6.4%)   T_gibbs = 3.863 ( -3.4%)
+L = 30, N = 15:  T_boltzmann = 3.800 ( -5.0%)   T_gibbs = 3.974 ( -0.6%)
+L = 40, N = 20:  T_boltzmann = 3.943 ( -1.4%)   T_gibbs = 4.071 ( +1.8%)
+L = 60, N = 30:  T_boltzmann = 3.931 ( -1.7%)   T_gibbs = 4.133 ( +3.3%)
