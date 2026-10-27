@@ -10,7 +10,7 @@ N, V = 1000.0, 100.0
 # 1. Caloric curves T(E) for d = 1..4, numeric + Sommerfeld overlay
 plt = plot(xlabel="E / N ε_F", ylabel="T / ε_F", title="Microcanonical caloric curve",
            legend=:topleft)
-for d in 1:4
+for d in 1:6
     εF = fermi_energy(N, d; V=V)
     E0 = ground_state_energy(N, d; V=V)
     Es = range(1.002 * E0, 3 * E0, length=60)
@@ -25,7 +25,7 @@ savefig(plt, joinpath(figdir, "caloric_curve.png"))
 
 # 2. Chemical potential μ(T) for d = 1..4
 plt = plot(xlabel="T / ε_F", ylabel="μ / ε_F", title="Chemical potential", legend=:bottomleft)
-for d in 1:4
+for d in 1:6
     εF = fermi_energy(N, d; V=V)
     Tvals = range(0.01, 0.8, length=60) .* εF
     μs = [chemical_potential(T, N, d; V=V) for T in Tvals]
@@ -36,7 +36,7 @@ savefig(plt, joinpath(figdir, "mu_vs_T.png"))
 # 3. Fluctuation scaling: relative rms ΔN/N vs N at fixed T/ε_F (log-log)
 plt = plot(xlabel="N", ylabel="ΔN / N", title="Grand canonical number fluctuations",
            xscale=:log10, yscale=:log10, legend=:bottomleft)
-for d in (2, 3, 4)
+for d in (2, 3, 4, 5, 6)
     Ns = [50.0, 100.0, 300.0, 1000.0, 3000.0, 10000.0]
     fracs = map(Ns) do n
         εF = fermi_energy(n, d; V=V)

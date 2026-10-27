@@ -24,6 +24,39 @@ function sommerfeld_chemical_potential(T::Real, N::Real, d::Integer; kw...)
 end
 
 """
+    classical_chemical_potential(T, N, d; V=1.0, spin=2, trap=false)
+
+Chemical potential of the *classical* (Boltzmann) ideal gas in `d` dimensions,
+from N = A exp(μ/T) T^(α+1) Γ(α+1):
+
+    μ = T ln[ N / (A Γ(α+1) T^(α+1)) ]
+
+Valid only for T ≫ ε_F, where the degeneracy parameter is ≪ 1; there it is large
+and negative, and agrees with the true Fermi-Dirac μ. At low T it is wrong by
+factors of order ε_F/T, so it must never be used as an answer, only as a seed.
+"""
+function classical_chemical_potential(T::Real, N::Real, d::Integer; kw...)
+    T <= 0 && return fermi_energy(N, d; kw...)
+    A = dos_prefactor(d; kw...)
+    α = dos_exponent(d; kw...)
+    return T * log(N / (A * gamma(α + 1) * T^(α + 1)))
+end
+
+"""
+    chemical_potential_seed(T, N, d; V=1.0, spin=2, trap=false)
+
+Physics starting guess for the `chemical_potential` root find. Below ε_F/2 the
+gas is degenerate and the Sommerfeld expansion applies; above it the gas is
+dilute and the classical Boltzmann result applies. Either way the seed is only
+a starting point for the solver, not the answer.
+"""
+function chemical_potential_seed(T::Real, N::Real, d::Integer; kw...)
+    εF = fermi_energy(N, d; kw...)
+    return T < 0.5 * εF ? sommerfeld_chemical_potential(T, N, d; kw...) :
+                          classical_chemical_potential(T, N, d; kw...)
+end
+
+"""
     sommerfeld_energy(T, N, d; V=1.0, spin=2, trap=false)
 
 Low-T internal energy: U ≈ E₀ + (π²/6) g(ε_F) T² (valid for any power-law DOS).

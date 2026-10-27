@@ -23,7 +23,11 @@ function moment(k::Real, T::Real, μ::Real, d::Integer;
                 V::Real=1.0, spin::Integer=2, trap::Bool=false, weight::Function=identity)
     A = dos_prefactor(d; V=V, spin=spin, trap=trap)
     α = dos_exponent(d; trap=trap)
-    quadgk(ε -> A * ε^(α + k) * weight(fermi(ε, μ, T)), 0, Inf)[1]
+    g = ε -> A * ε^(α + k) * weight(fermi(ε, μ, T))
+    # The Fermi factor varies on a scale ~T around ε = μ. At low T that is far
+    # narrower than quadgk's adaptive refinement will find on [0, ∞), so put an
+    # explicit node on the Fermi surface; otherwise the integral skips the step.
+    μ > 0 ? quadgk(g, 0, μ, Inf)[1] : quadgk(g, 0, Inf)[1]
 end
 
 """Grand canonical ⟨N⟩ = ∫ g(ε) f(ε) dε."""
@@ -43,13 +47,27 @@ energy_variance(T::Real, μ::Real, d::Integer; kw...) =
 """
     chemical_potential(T, N, d; V=1.0, spin=2, trap=false)
 
-Solve ⟨N⟩(T, μ) = N for μ, bracketing around the T=0 Fermi energy.
+Solve ⟨N⟩(T, μ) = N. Seeded from a physics approximation
+(`chemical_potential_seed`: Sommerfeld at low T, classical at high T) so the
+solver starts near the answer at any temperature and dimension.
 """
 function chemical_potential(T::Real, N::Real, d::Integer; kw...)
     εF = fermi_energy(N, d; kw...)
-    lo = -10 * (εF + T)
-    hi = 2 * εF + 10 * T
-    find_zero(μ -> particle_number(T, μ, d; kw...) - N, (lo, hi))
+
+    # Degenerate limit: for T ≪ ε_F the Fermi surface is sharper than float
+    # resolution in μ, so ⟨N⟩(μ) is effectively a step and no μ can satisfy the
+    # residual tolerance. The exact T → 0 answer is μ = ε_F, so return it.
+    T < 1e-10 * εF && return εF
+
+    residual = μ -> particle_number(T, μ, d; kw...) - N
+    μ = find_zero(residual, chemical_potential_seed(T, N, d; kw...))
+
+    # Order0 can stop on an x-tolerance before the residual is actually small,
+    # so check the physics we care about rather than trusting the solver.
+    abs(residual(μ)) <= 1e-8 * N ||
+        error("chemical_potential: seed solve did not converge for T=$T, N=$N, d=$d " *
+              "(μ=$μ, residual=$(residual(μ)))")
+    return μ
 end
 
 """

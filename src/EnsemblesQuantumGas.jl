@@ -13,6 +13,7 @@ export microcanonical_temperature, microcanonical_chemical_potential, microcanon
 export canonical_average_energy
 export ground_state_energy, sommerfeld_chemical_potential, sommerfeld_energy,
        sommerfeld_temperature, sommerfeld_entropy, heat_capacity
+export classical_chemical_potential, chemical_potential_seed
 export particle_number_variance, energy_variance
 export box_levels, configurations, omega, omega_counts, exact_partition,
        exact_canonical_energy, exact_grand_particle_number, exact_grand_energy,
