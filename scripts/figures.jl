@@ -1,4 +1,4 @@
-using EnsemblesQuantumGas
+using DimensionalFermiGas
 using Plots
 using Roots: find_zero
 

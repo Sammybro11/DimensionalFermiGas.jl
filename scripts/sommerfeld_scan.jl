@@ -1,4 +1,4 @@
-using EnsemblesQuantumGas
+using DimensionalFermiGas
 using QuadGK: quadgk
 using Roots: find_zero
 using Printf

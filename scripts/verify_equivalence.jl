@@ -1,4 +1,4 @@
-using EnsemblesQuantumGas
+using DimensionalFermiGas
 using Printf
 
 println("=== Part A: continuum ideal Fermi gas ===")

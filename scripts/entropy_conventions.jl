@@ -1,4 +1,4 @@
-using EnsemblesQuantumGas
+using DimensionalFermiGas
 using Printf
 
 # Task 2: Boltzmann S = ln Ω(E*) vs Gibbs S = ln Σ_{E'≤E} Ω(E') for a 1D

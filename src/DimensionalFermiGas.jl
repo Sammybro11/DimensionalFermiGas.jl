@@ -1,4 +1,4 @@
-module EnsemblesQuantumGas
+module DimensionalFermiGas
 
 include("dos.jl")
 include("grandcanonical.jl")
