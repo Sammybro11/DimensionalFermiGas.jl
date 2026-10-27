@@ -88,13 +88,15 @@ plt = plot(Ls, Tb_ratio, marker=:circle, label="Boltzmann S = ln Ω(E) (at mode 
 plot!(plt, Ls, Tg_ratio, marker=:square, label="Gibbs S = ln Σ_{E'≤E} Ω (at mean ⟨E⟩)")
 hline!(plt, [1.0], ls=:dash, color=:black, label=nothing)
 savefig(plt, joinpath(figdir, "microcanonical_T_convergence.png"))
-# 6. Sommerfeld relative error vs T/ε_F for the three operating cases
-plt = plot(layout=(1, 3), size=(1500, 430), yscale=:log10,
+# 6. Sommerfeld relative error vs T/ε_F for the operating cases (2 x 3 grid)
+plt = plot(layout=(2, 3), size=(1500, 800), yscale=:log10,
            xlabel="T / ε_F", ylabel="relative error", legend=:bottomright,
            margin=6Plots.mm, left_margin=12Plots.mm, bottom_margin=10Plots.mm,
            top_margin=6Plots.mm, right_margin=4Plots.mm,
            guidefontsize=10, tickfontsize=8, legendfontsize=8, titlefontsize=11)
-cases = (("d = 3 box", 3, (V=V,)), ("d = 4 box", 4, (V=V,)), ("d = 3 trap", 3, (trap=true,)))
+cases = (("d = 3 box", 3, (V=V,)), ("d = 4 box", 4, (V=V,)),
+         ("d = 5 box", 5, (V=V,)), ("d = 6 box", 6, (V=V,)),
+         ("d = 3 trap", 3, (trap=true,)), ("d = 4 trap", 4, (trap=true,)))
 for (i, (label, d, kw)) in enumerate(cases)
     εF = fermi_energy(N, d; kw...)
     rs = 10 .^ range(log10(0.01), log10(0.5), length=30)

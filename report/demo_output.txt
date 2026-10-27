@@ -1,20 +1,33 @@
 === Part A: continuum ideal Fermi gas ===
 d = 3  Microcanonical:  E = 39981.2630  ->  T = 17.788831,  μ = 37.314588,  S = 1648.2730
-d = 3  Canonical:       ⟨E⟩(T) = 39981.263022   (match: 0.00e+00 relative error)
-d = 3  Grand canonical: ⟨N⟩ = 1000.000000 (match: 1.14e-16),  ⟨E⟩ = 39981.263022
+d = 3  Canonical:       ⟨E⟩(T) = 39981.263022   (match: 1.82e-16 relative error)
+d = 3  Grand canonical: ⟨N⟩ = 1000.000000 (match: 0.00e+00),  ⟨E⟩ = 39981.263022
 
 d = 4  Microcanonical:  E = 39738.3531  ->  T = 14.429613,  μ = 30.697749,  S = 2003.5035
 d = 4  Canonical:       ⟨E⟩(T) = 39738.353063   (match: 0.00e+00 relative error)
-d = 4  Grand canonical: ⟨N⟩ = 1000.000000 (match: 1.14e-16),  ⟨E⟩ = 39738.353063
+d = 4  Grand canonical: ⟨N⟩ = 1000.000000 (match: 0.00e+00),  ⟨E⟩ = 39738.353063
 
-=== Part A2: 3D harmonic trap (N = 1000, ħω = 1) ===
+d = 5  Microcanonical:  E = 41437.3117  ->  T = 12.778608,  μ = 28.255549,  S = 2328.6330
+d = 5  Canonical:       ⟨E⟩(T) = 41437.311726   (match: 0.00e+00 relative error)
+d = 5  Grand canonical: ⟨N⟩ = 1000.000000 (match: 0.00e+00),  ⟨E⟩ = 41437.311726
+
+d = 6  Microcanonical:  E = 43927.4647  ->  T = 11.801457,  μ = 27.496122,  S = 2633.0505
+d = 6  Canonical:       ⟨E⟩(T) = 43927.464662   (match: 1.66e-16 relative error)
+d = 6  Grand canonical: ⟨N⟩ = 1000.000000 (match: 1.14e-16),  ⟨E⟩ = 43927.464662
+
+=== Part A2: harmonic trap (N = 1000, ħω = 1) ===
 trap d = 3  Microcanonical:  E = 16225.3077  ->  T = 4.359056,  μ = 10.156130
-trap d = 3  Canonical: ⟨E⟩ = 16225.307666 (match: 0.00e+00),  Grand canonical: ⟨N⟩ = 1000.000000 (match: 2.27e-16)
+trap d = 3  Canonical: ⟨E⟩ = 16225.307666 (match: 0.00e+00),  Grand canonical: ⟨N⟩ = 1000.000000 (match: 0.00e+00)
+trap d = 4  Microcanonical:  E = 12559.6217  ->  T = 2.690088,  μ = 7.090508
+trap d = 4  Canonical: ⟨E⟩ = 12559.621673 (match: 0.00e+00),  Grand canonical: ⟨N⟩ = 1000.000000 (match: 1.14e-16)
 
 === Part A3: low-temperature Fermi-integral point (T/εF = 0.05) ===
 d = 3  Fermi integrals:  T/εF = 0.05  ->  T = 2.221181,  μ = 44.331938,  U = 26927.1740,  S = 246.1235
 d = 4  Fermi integrals:  T/εF = 0.05  ->  T = 1.986918,  μ = 39.574598,  U = 26817.0495,  S = 327.6311
+d = 5  Fermi integrals:  T/εF = 0.05  ->  T = 1.933741,  μ = 38.436067,  U = 28019.5631,  S = 409.2179
+d = 6  Fermi integrals:  T/εF = 0.05  ->  T = 1.952332,  μ = 38.725497,  U = 29763.1838,  S = 491.0786
 trap d = 3  Fermi integrals:  T/εF = 0.05  ->  T = 0.721125,  μ = 14.303878,  U = 10993.5053,  S = 491.0786
+trap d = 4  Fermi integrals:  T/εF = 0.05  ->  T = 0.523318,  μ = 10.337282,  U = 8544.6210,  S = 656.3789
 
 === Part B: exact small discrete system (1D box, spinless fermions) ===
 Chosen (N, E) = (2, 6.4374) at T = 3.000

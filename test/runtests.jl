@@ -1,4 +1,4 @@
-using EnsemblesQuantumGas
+using DimensionalFermiGas
 using Test
 using Combinatorics: binomial
 

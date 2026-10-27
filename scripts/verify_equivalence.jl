@@ -2,7 +2,7 @@ using DimensionalFermiGas
 using Printf
 
 println("=== Part A: continuum ideal Fermi gas ===")
-for d in (3, 4)
+for d in (3, 4, 5, 6)
     N = 1000.0
     V = 100.0
     εF = fermi_energy(N, d; V=V)
@@ -22,19 +22,23 @@ for d in (3, 4)
     println()
 end
 
-println("=== Part A2: 3D harmonic trap (N = 1000, ħω = 1) ===")
-d, N = 3, 1000.0
-E_micro = 1.5 * ground_state_energy(N, d; trap=true)
-T_micro = microcanonical_temperature(E_micro, N, d; trap=true)
-μ_micro = microcanonical_chemical_potential(E_micro, N, d; trap=true)
-@printf "trap d = %d  Microcanonical:  E = %.4f  ->  T = %.6f,  μ = %.6f\n" d E_micro T_micro μ_micro
-E_can = canonical_average_energy(T_micro, N, d; trap=true)
-N_gc = particle_number(T_micro, μ_micro, d; trap=true)
-@printf "trap d = %d  Canonical: ⟨E⟩ = %.6f (match: %.2e),  Grand canonical: ⟨N⟩ = %.6f (match: %.2e)\n" d E_can abs(E_can - E_micro) / E_micro N_gc abs(N_gc - N) / N
+println("=== Part A2: harmonic trap (N = 1000, ħω = 1) ===")
+N = 1000.0
+for d in (3, 4)
+    E_micro = 1.5 * ground_state_energy(N, d; trap=true)
+    T_micro = microcanonical_temperature(E_micro, N, d; trap=true)
+    μ_micro = microcanonical_chemical_potential(E_micro, N, d; trap=true)
+    @printf "trap d = %d  Microcanonical:  E = %.4f  ->  T = %.6f,  μ = %.6f\n" d E_micro T_micro μ_micro
+    E_can = canonical_average_energy(T_micro, N, d; trap=true)
+    N_gc = particle_number(T_micro, μ_micro, d; trap=true)
+    @printf "trap d = %d  Canonical: ⟨E⟩ = %.6f (match: %.2e),  Grand canonical: ⟨N⟩ = %.6f (match: %.2e)\n" d E_can abs(E_can - E_micro) / E_micro N_gc abs(N_gc - N) / N
+end
 
 println()
 println("=== Part A3: low-temperature Fermi-integral point (T/εF = 0.05) ===")
-for (label, dd, kw) in (("d = 3", 3, (V=100.0,)), ("d = 4", 4, (V=100.0,)), ("trap d = 3", 3, (trap=true,)))
+for (label, dd, kw) in (("d = 3", 3, (V=100.0,)), ("d = 4", 4, (V=100.0,)),
+                        ("d = 5", 5, (V=100.0,)), ("d = 6", 6, (V=100.0,)),
+                        ("trap d = 3", 3, (trap=true,)), ("trap d = 4", 4, (trap=true,)))
     εF = fermi_energy(N, dd; kw...)
     T = 0.05 * εF
     μ = chemical_potential(T, N, dd; kw...)
@@ -72,13 +76,15 @@ println()
 println("=== Part C: exact microcanonical T from pure state counting (1D trap, ħω = 1) ===")
 println("(T from the slope of ln Ω alone, no canonical input; canonical T0 = 4.0)")
 T0 = 4.0
-for L in (10, 16, 22, 30, 40, 60)
-    levels = collect(0:L)
-    Nex = (L + 1) ÷ 2
-    counts = omega_counts(levels, Nex)
-    Ec = exact_canonical_energy(levels, Nex, T0)
-    Estar = argmax(e -> log(Float64(counts[e])) - e / T0, collect(keys(counts)))
-    Tb = microcanonical_temperature_exact(levels, Nex, Estar; window=10)
-    Tg = microcanonical_temperature_exact(levels, Nex, round(Int, Ec); window=10, entropy=:gibbs)
-    @printf "L = %2d, N = %2d:  T_boltzmann = %.3f (%+5.1f%%)   T_gibbs = %.3f (%+5.1f%%)\n" L Nex Tb 100 * (Tb - T0) / T0 Tg 100 * (Tg - T0) / T0
+let
+    for L in (10, 16, 22, 30, 40, 60)
+        local levels = collect(0:L)
+        local Nex = (L + 1) ÷ 2
+        local counts = omega_counts(levels, Nex)
+        local Ec = exact_canonical_energy(levels, Nex, T0)
+        local Estar = argmax(e -> log(Float64(counts[e])) - e / T0, collect(keys(counts)))
+        local Tb = microcanonical_temperature_exact(levels, Nex, Estar; window=10)
+        local Tg = microcanonical_temperature_exact(levels, Nex, round(Int, Ec); window=10, entropy=:gibbs)
+        @printf "L = %2d, N = %2d:  T_boltzmann = %.3f (%+5.1f%%)   T_gibbs = %.3f (%+5.1f%%)\n" L Nex Tb 100 * (Tb - T0) / T0 Tg 100 * (Tg - T0) / T0
+    end
 end
