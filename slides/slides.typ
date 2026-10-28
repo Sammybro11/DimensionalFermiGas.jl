@@ -10,10 +10,7 @@
 #show: calmly.with(
   config-info(
     title: [Dimensional Fermi Gas],
-    subtitle: [
-      Microcanonical, canonical, and grand canonical Ensembles
-      of a Fermi gas in $d$ dimensions
-    ],
+    subtitle: [The dimension $d$ enters only through the density of states, $g(epsilon) = A epsilon^alpha$.],
     author: "Group 4: Samyak Rai, Shanmukh Machiraju, Anirudh Bhat",
     date: "28 October, 2026",
     institution: "Indian Institute of Technology Hyderabad",
@@ -32,27 +29,19 @@
 // ------------------------------------------------------------
 #section-slide[What controls the gas]
 
-== The system, and the claim
+== The system, the units, the scope
 
 #block(breakable:false)[
+*System* --- $N$ non-interacting spin-$1 slash 2$ fermions in a
+$d$-dimensional box, $V = L^d$, plus a harmonic trap, frequency $omega$.
 
-A Fermi gas in $d$ dimensions is not $d$ separate problems: the dimension
-enters only through the density of states, $g(epsilon) = A epsilon^alpha$.
-Two numbers fix every thermodynamic quantity.
+*Units* --- $ℏ^2 slash 2m = 1$ and $k_B = 1$, so $epsilon = k^2$ and $T$
+carries units of energy.
 
-$N$ non-interacting spin-$1 slash 2$ fermions in a $d$-dimensional box,
-$V = L^d$ #text(fill: gray)[(plus a harmonic trap, frequency $omega$, as a
-second dial on $alpha$)]. The single-particle levels are
-
-#align(center, $ epsilon = (ℏ^2 k^2)/(2m), quad k = (2 pi)/L (n_1, ..., n_d), quad n_i = 1, 2, ... $)
-
-#text(fill: gray)[*Units*] --- $ℏ^2 slash 2m = 1$, $k_B = 1$, so $epsilon = k^2$; entropy is dimensionless and $T$ carries units of energy.
-
-#text(fill: gray)[*Scope*] --- non-interacting, one species, thermodynamic
-limit $N, V -> infinity$ at fixed $N slash V$, with $d = 1, ..., 6$ #text(fill: gray)[(the thermodynamics never sees $d$ directly, only $alpha$; $d = 6$ is just a larger $alpha$)].
-// P1, 60 s. Claim first, then everything the audience needs on one slide.
-
+*Scope* --- thermodynamic limit, $N, V -> infinity$ at fixed $N slash V$,
+with $d = 1, ..., 6$: the thermodynamics never sees $d$ directly, only $alpha$.
 ]
+// P1, 40 s. Three short lines.
 
 == The DOS gives two parameters
 
@@ -66,6 +55,8 @@ volume; the factor $d slash 2$ in $A$ comes from the derivative.]
 
 *Trap* --- tuples with $sum n_i <= epsilon slash ℏ omega$ fill a $d$-simplex:
 $ N(epsilon) = g_s/(d!) (epsilon slash ℏ omega)^d quad -> quad alpha = d - 1 , quad A = g_s/((d - 1)! (ℏ omega)^d) $
+
+*Continuum* --- levels so dense that $sum_i -> integral g(epsilon) dif epsilon$.
 
 #v(0.3em)
 #text(fill: blue)[
@@ -88,11 +79,11 @@ $E_0 = ((alpha+1)/(alpha+2)) N epsilon_F$.
   table.hline(stroke: 0.8pt),
   [case], [$alpha$], [$epsilon_F$], [$E_0$],
   table.hline(stroke: 0.4pt),
-  [$d = 3$ box], [0.5], [44.42], [26 654],
-  [$d = 4$ box], [1.0], [39.74], [26 492],
-  [$d = 5$ box], [1.5], [38.67], [27 625],
-  [#text(fill: blue)[$d = 6$ box]], [#text(fill: blue)[2.0]], [#text(fill: blue)[39.05]], [#text(fill: blue)[29 285]],
-  [#text(fill: blue)[trap, $d = 3$]], [#text(fill: blue)[2.0]], [#text(fill: blue)[14.42]], [#text(fill: blue)[10 817]],
+  [$d = 3$ box], [0.5], [44.42], [26 650],
+  [$d = 4$ box], [1.0], [39.74], [26 490],
+  [$d = 5$ box], [1.5], [38.67], [27 620],
+  [#text(fill: blue)[$d = 6$ box]], [#text(fill: blue)[2.0]], [#text(fill: blue)[39.05]], [#text(fill: blue)[29 280]],
+  [#text(fill: blue)[trap, $d = 3$]], [#text(fill: blue)[2.0]], [#text(fill: blue)[14.42]], [#text(fill: blue)[10 820]],
   [trap, $d = 4$], [3.0], [10.47], [8 373],
   table.hline(stroke: 0.8pt),
 ))
@@ -106,35 +97,24 @@ $E_0 = ((alpha+1)/(alpha+2)) N epsilon_F$.
 // P1, 45 s. Flag the alpha = 2 duplicate here.
 ]
 
-== Sommerfeld, and why $alpha$ cancels
+== Sommerfeld, and the $alpha$ cancellation
 
 #block(breakable:false)[
-For $T dot.c mu$: integrate by parts and expand $H$ about $mu$,
+#text(fill: gray)[*Lemma*] (for $T dot.c mu$): #text(fill: gray)[integrate by parts, expand $H$ about $mu$]
 
 #align(center, $ integral_0^infinity H(epsilon) f(epsilon) dif epsilon approx integral_0^mu H(epsilon) dif epsilon + (pi^2/6) T^2 H'(mu) $)
 
-*Take $H = g$* (fixes $N$):
-$mu(T) approx epsilon_F [1 - (pi^2/6) alpha (T slash epsilon_F)^2]$.
-$mu$ is *not* universal --- rising DOS ($alpha > 0$) forces $mu$ down,
-falling ($alpha < 0$, the $d = 1$ box) forces it up, flat ($alpha = 0$,
-$d = 2$) holds it.
+#text(fill: gray)[*Cancellation*] (take $H = epsilon g$): #text(fill: gray)[the $alpha$ from $mu(T)$ cancels the explicit $alpha$]
 
-*Take $H = epsilon g$*: the $alpha$ inherited from $mu(T)$ cancels the
-explicit $alpha$, so $U$ *is* universal,
-
-#align(center, $ U(T) approx E_0 + (pi^2/6) g(epsilon_F) T^2 $)
-
-one form, every dimension. Then $C_V = S = (pi^2/3) g(epsilon_F) T$,
-linear in $T$ for any power-law DOS.
+#align(center, $ U(T) approx E_0 + (pi^2/6) g(epsilon_F) T^2 , quad C_V = (pi^2/3) g(epsilon_F) T $)
 ]
-// P1, 75 s. Core of Act I. U is universal, mu is not.
+// P1, 60 s. One line each; mu(T) and the slope mechanism are spoken.
 
 #figure-slide(
   image("figures/mu_vs_T.png", width: 75%),
-  title: [The sign of the slope flips with $alpha$],
-  caption: [$d = 1$ rises. $d = 2$ is flat. $d >= 3$ falls.],
+  caption: [$d = 1$ rises, $d = 2$ is flat, $d >= 3$ falls: the slope sign flips with $alpha$.],
 )
-// P1, 45 s. One sentence.
+// P1, 45 s. Figure 4 alone; the closing line is spoken from memory.
 
 // ------------------------------------------------------------
 //  ACT II --- P2 --- 5:00
@@ -336,8 +316,30 @@ Higher $d$ converges *slower*. The gap falls off as plain $1 slash N$ as $alpha 
 //  BACKUP
 // ============================================================
 
-== Backup: the classical chemical potential
-// If asked. Same trend with alpha.
+== Backup: the classical limit of $mu$
+
+#block(breakable:false)[
+#align(center, table(
+  columns: (auto, auto, auto, auto, auto),
+  align: (center,) * 5,
+  stroke: none,
+  table.hline(stroke: 0.8pt),
+  [$T slash epsilon_F$], [degeneracy], [$mu$ exact], [$mu$ classical], [error],
+  table.hline(stroke: 0.4pt),
+  [0.05], [67.28], [44.33], [9.349], [78.91%],
+  [0.10], [23.79], [44.05], [14.08], [68.04%],
+  [0.30], [4.578], [40.63], [20.27], [50.10%],
+  [0.50], [2.128], [33.01], [16.77], [49.20%],
+  [1.00], [0.7523], [-0.9534], [-12.65], [1227%],
+  [2.00], [0.2660], [-109.3], [-117.7], [7.61%],
+  [5.00], [0.06728], [-594.2], [-599.5], [0.89%],
+  [10.00], [0.02379], [-1657], [-1661], [0.23%],
+  table.hline(stroke: 0.8pt),
+))
+#v(0.3em)
+#text(fill: gray, size: 0.85em)[$d = 3$ box at $N = 1000$: the classical form is a seed and a high-$T$ check, never an answer below $T approx epsilon_F$. Higher $d$ converges sooner.]
+]
+// Backup only, not in the main line.
 
 == Backup: where the closed forms hold
 // If asked. The T^2 forms are strictest for C_V.
