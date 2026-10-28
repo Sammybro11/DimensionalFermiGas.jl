@@ -503,7 +503,7 @@ Higher $d$ converges *slower*. The gap falls off as plain $1 slash N$ as $alpha 
 
 #figure-slide(
   image("figures/exact_convergence.png", width: 68%),
-  title: [The gap is real, and it closes],
+  title: [Canonical and Grand Canonical Gap],
   caption: [Exact $⟨E⟩_"gc"$ against exact $⟨E⟩_C$ for 1D boxes. Both sides are separate computations. They disagree at small $L$ and converge as $L$ grows.],
 )
 // P3, 45 s.
