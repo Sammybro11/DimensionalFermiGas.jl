@@ -10,7 +10,7 @@
 #show: calmly.with(
   config-info(
     title: [Dimensional Fermi Gas],
-    subtitle: [The dimension $d$ enters only through the density of states, $g(epsilon) = A epsilon^alpha$.],
+    subtitle: [Microcanonical, Canonical and Grand Canonincal Ensembles of $d$ Dimensional Fermi Gas],
     author: "Group 4: Samyak Rai, Shanmukh Machiraju, Anirudh Bhat",
     date: "28 October, 2026",
     institution: "Indian Institute of Technology Hyderabad",
