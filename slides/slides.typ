@@ -1,7 +1,7 @@
 //  Build: typst compile --root . slides/slides.typ slides/slides.pdf
 //
 //  Act I   P1  5:00   what controls the gas
-//  Act II  P2  5:00   temperature from state counts
+//  Act II  P2  5:00   temperature from state counts (Shanmukh)
 //  Act III P3  5:00   do the ensembles agree
 // ============================================================
 
@@ -137,29 +137,171 @@ linear in $T$ for any power-law DOS.
 // P1, 45 s. One sentence.
 
 // ------------------------------------------------------------
-//  ACT II --- P2 --- 5:00
+//  ACT II --- P2 (Shanmukh) --- 5:00
 // ------------------------------------------------------------
 #section-slide[Temperature from state counts]
+// P2 (Shanmukh), 5 s. Handoff in from P1.
 
 == Temperature from counting alone
-// Omega from the generator function. T from d ln Omega / dE.
-// P2, 60 s.
 
-#figure-slide(
-  image("figures/microcanonical_T_convergence.png", width: 70%),
-  title: [Boltzmann against Gibbs: the estimator sets the offset],
-  caption: [Beyond $L = 60$ the two conventions bracket $T_0$.],
+#block(breakable:false)[
+An isolated gas fixes $(N, E, V)$. We count its microstates and read $T$ and
+$mu$ off how the count changes.
+
+#block(stroke: 0.6pt, inset: 8pt, radius: 3pt, width: 100%, above: 0.8em, below: 1.4em)[
+  #align(center, $ S = ln Omega(N, E), quad 1/T = lr((partial S)/(partial E)|)_(N, V), quad mu/T = - lr((partial S)/(partial N)|)_(E, V) $)
+]
+
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 2em,
+  row-gutter: 1.1em,
+  align: (left + top, left + top),
+  [#text(fill: gray)[*Generating function*] --- each level empty or full],
+  [#text(fill: gray)[*Table fill*] --- one update per level],
+  align(center, $ product_i (1 + z thin x^(epsilon_i)) = sum_(N, E) Omega(N, E) thin z^N x^E $),
+  align(center, $ Z'_(n, e) = Z_(n, e) + Z_(n - 1, thin e - epsilon_i) $),
+  text(size: 0.85em)[Levels $1, 4, 9, 16$ with $N = 2$: six states at
+    $E = 5, 10, 13, 17, 20, 25$, each with $Omega = 1$.],
+  text(size: 0.85em)[Cost $O(L dot.c N dot.c E_"max")$ instead of $binom(L, N)$.
+    Exact `BigInt` counts in `omega_counts`.],
 )
-// P2, 60 s. Admit no convergence to a limit.
+
+#v(1.4em)
+#text(fill: blue)[No bath and no canonical input: $T$ comes from $Omega$ alone.]
+]
+// P2 (Shanmukh), 75 s. Definitions, then the product. Point at the four-level example.
+
+== Boltzmann against Gibbs: offsets that do not shrink
+
+#block(breakable:false)[
+#grid(
+  columns: (1.35fr, 1fr),
+  column-gutter: 1.4em,
+  align: (center + horizon, left + horizon),
+  [
+    #image("figures/microcanonical_T_convergence.png", width: 100%)
+    #v(-0.4em)
+    #text(size: 0.8em, fill: gray)[1D trap, levels $0, ..., L$, $N = L slash 2$, reference $T_0 = 4$.]
+  ],
+  [
+    #text(fill: gray)[*Boltzmann*] at the mode $E^*$
+    $ S_B = ln Omega(E) $
+    #text(fill: gray)[*Gibbs*] at the mean $⟨E⟩$
+    $ S_G = ln sum_(E' <= E) Omega(E') $
+
+    #align(center, table(
+      columns: (auto, auto, auto),
+      align: (center,) * 3,
+      stroke: none,
+      table.hline(stroke: 0.8pt),
+      [$L$], [$T_B$], [$T_G$],
+      table.hline(stroke: 0.4pt),
+      [10], [$+9.5%$], [$-18.6%$],
+      [30], [$-5.0%$], [$-0.6%$],
+      [60 -- 120], [$-1.7%$], [$+3.3%$],
+      table.hline(stroke: 0.8pt),
+    ))
+
+    #text(fill: blue)[From $L = 60$ the numbers freeze. The Boltzmann offset is fit bias; the Gibbs offset is a real finite-size gap.]
+  ],
+)
+]
+// P2 (Shanmukh), 75 s. Admit no convergence to a limit. Backup slide explains the freeze.
 
 == The continuum route, and its built-in circularity
-// Inversion of <E>(T) = E. Warn that Sections 2 and 3 are circular.
-// P2, 60 s. Handoff to P3.
-Lorem Ipsum
 
-== Numerics: where the error actually lives
-// P2, 60 s.
-Lorem Ipsum
+#block(breakable:false)[
+At $N = 1000$ counting is out of reach. $Omega(E) e^(-E slash T)$ peaks
+where $partial ln Omega slash partial E = 1 slash T$, so we solve
+
+#align(center, $ ⟨E⟩(T, mu(T, N)) = E quad -> quad T(E, N), quad mu = mu(T(E, N), N) . $)
+
+#grid(
+  columns: (auto, 1fr),
+  column-gutter: 2em,
+  align: (center + top, left + top),
+  table(
+    columns: (auto, auto, auto, auto, auto),
+    align: (center,) * 5,
+    stroke: none,
+    table.hline(stroke: 0.8pt),
+    [case], [$T$], [$mu$], [$T slash epsilon_F$], [$S$],
+    table.hline(stroke: 0.4pt),
+    [$d = 3$ box], [17.79], [37.31], [0.40], [1648],
+    [$d = 4$ box], [14.43], [30.70], [0.36], [2004],
+    [$d = 5$ box], [12.78], [28.26], [0.33], [2329],
+    [#text(fill: blue)[$d = 6$ box]], [11.80], [27.50], [0.30], [#text(fill: blue)[2633]],
+    [#text(fill: blue)[trap, $d = 3$]], [4.359], [10.16], [0.30], [#text(fill: blue)[2633]],
+    [trap, $d = 4$], [2.690], [7.091], [0.26], [3200],
+    table.hline(stroke: 0.8pt),
+  ),
+  [
+    #set par(spacing: 0.9em)
+    #text(fill: gray)[*Operating point*] --- $N = 1000$, $E = 1.5 thin E_0$.
+
+    #text(fill: gray)[*Warm gas*] --- $T slash epsilon_F = 0.26$ to $0.40$. The inverted
+    Sommerfeld $U(T)$ gives a $T$ 4 to 13% low.
+
+    #text(fill: blue)[Blue rows share $alpha = 2$: same $S$, different $T$.]
+
+    #text(fill: red)[This $T$ is defined through $⟨E⟩$. Fed back into the canonical and
+    grand canonical sums, $E$ and $N$ return to $10^(-16)$ by construction.]
+  ],
+)
+]
+// P2 (Shanmukh), 60 s. Saddle point in one sentence. The red line sets up Act III; do not resolve it here.
+
+== Numerics behind the temperature
+
+#block(breakable:false)[
+#grid(
+  columns: (1fr, 1fr, 1fr),
+  column-gutter: 1.4em,
+  align: (left + top,) * 3,
+  [
+    #text(fill: gray)[*$T$ inversion*] --- bisection on
+    $ ⟨E⟩(T, mu(T, N)) = E $
+    inside the bracket #box($T in (10^(-12), T_"max")$) with
+    $ T_"max" = 20 (E - E_0) slash N + epsilon_F . $
+
+    #text(size: 0.85em)[The lower end stands in for $T = 0$. The upper end is always hotter than
+    the answer. Every step re-solves $mu$ so that $⟨N⟩ = N$. The integrals set the accuracy,
+    $tilde 10^(-8)$.]
+  ],
+  [
+    #text(fill: gray)[*Exact counts*] --- the largest entry at $L = 120$, $N = 60$ is
+    $ max_E thin Omega(N, E) approx 4 times 10^(32) . $
+
+    #text(size: 0.85em)[`Int64` wraps silently above #box($9.2 times 10^(18)$). `Float64` holds integers
+    exactly only to #box($2^(53) approx 9 times 10^(15)$). So $Omega$ is a `BigInt`, and the canonical
+    weights switch to `BigFloat` when #box($N dot.c Delta epsilon slash T > 1000$).]
+  ],
+  [
+    #text(fill: gray)[*Exact-$T$ estimator*] --- $1 slash T$ is the least-squares slope of
+    $ln Omega$ over $plus.minus w$ occupied energies.
+
+    #align(center, table(
+      columns: (auto, auto, auto, auto),
+      align: (center,) * 4,
+      stroke: none,
+      table.hline(stroke: 0.8pt),
+      [$w$], [2], [10], [20],
+      table.hline(stroke: 0.4pt),
+      [$T_B$], [4.004], [3.931], [3.815],
+      table.hline(stroke: 0.8pt),
+    ))
+
+    #text(size: 0.85em)[At the mode $E^*$ the exact slope is $1 slash T_0$, so a narrow window
+    returns $T_0 = 4$. A wide window fits a straight line to a curve.]
+  ],
+)
+
+#v(0.8em)
+#text(fill: blue)[Counting is exact; the only free choice is the fit window. We get
+temperature with no canonical input.]
+]
+// P2 (Shanmukh), 45 s. Three columns left to right. Close on the blue line, then hand to Samyak.
 
 // ------------------------------------------------------------
 //  ACT III --- P3 --- 5:00
@@ -344,6 +486,27 @@ Higher $d$ converges *slower*. The gap falls off as plain $1 slash N$ as $alpha 
 
 == Backup: where the closed forms hold
 // If asked. The T^2 forms are strictest for C_V.
+
+== Backup: why the exact table freezes
+
+#block(breakable:false)[
+Once $N$ and the empty levels above the Fermi sea exceed the thermal
+excitations, the count depends on the excitation $q = E - E_0$ alone:
+
+#align(center, $ Omega(N, E_0 + q) = p(q) = 1, 1, 2, 3, 5, 7, 11, 15, 22, 30, 42, ... $)
+
+#text(size: 0.85em)[$p(q)$ counts the integer partitions of $q$. Each excited state lists how far
+each particle moved up. The result is the same for every $L >= 60$ at $T_0 = 4$.]
+
+The heat capacity never grows: $C_V = (pi^2 slash 3) thin g(epsilon_F) thin T$ with
+$g(epsilon_F) = 1 slash ℏ omega$ at every $N$. At $T = 4$, $C approx 12.7$, $⟨q⟩ approx 24.4$
+and $Delta E slash ⟨q⟩ approx 0.58$.
+
+#v(0.3em)
+#text(fill: blue)[A gas with $C approx 13$ stays a small system. Convergence needs $C$ to grow,
+for example at fixed $T slash epsilon_F$.]
+]
+// P2 (Shanmukh). Only if asked why the offsets never shrink.
 
 #figure-slide(
   image("figures/caloric_curve.png", width: 75%),
