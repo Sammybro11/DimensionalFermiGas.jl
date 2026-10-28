@@ -29,92 +29,154 @@
 // ------------------------------------------------------------
 #section-slide[System Description]
 
-== The system, the units, the scope
+== The System
 
-#block(breakable:false)[
-*System* --- $N$ non-interacting spin-$1 slash 2$ fermions in a
-$d$-dimensional box, $V = L^d$, plus a harmonic trap, frequency $omega$.
+#text(fill: gray)[*System:*] $N$ non-interacting spin-$1 slash 2$ fermions ($g_s = 2$) in $d$ dimensions, in a box or a harmonic trap.
 
-*Units* --- $ℏ^2 slash 2m = 1$ and $k_B = 1$, so $epsilon = k^2$ and $T$
-carries units of energy.
-
-*Scope* --- thermodynamic limit, $N, V -> infinity$ at fixed $N slash V$,
-with $d = 1, ..., 6$: the thermodynamics never sees $d$ directly, only $alpha$.
+#block(stroke: 0.6pt, inset: 10pt, radius: 3pt, width: 100%, above: 0.4em, below: 0.6em)[
+  #grid(
+    columns: (1fr, 1fr),
+    column-gutter: 1.4em,
+    [
+      #text(fill: gray)[*Box* --- volume $V = L^d$]
+      $ epsilon = k^2 , quad bold(k) = (2 pi) / L bold(n) , quad bold(n) in ZZ^d $
+    ],
+    [
+      #text(fill: gray)[*Trap* --- frequency $omega$]
+      $ epsilon = n_1 + dots.c + n_d , quad n_i = 0, 1, 2, dots $
+    ],
+  )
 ]
-// P1, 40 s. Three short lines.
 
-== The DOS gives two parameters
+#text(fill: gray)[*Units:*] $ℏ^2 slash 2m = 1$, $ℏ omega = 1$, $k_B = 1$. $T$ carries units of energy.
 
-#block(breakable:false)[
+#text(fill: gray)[*Scope:*] $N, V -> infinity$ at fixed $N slash V$, for $d = 1, dots, 6$.
 
-*Box* --- allowed $k$ lie on a lattice of spacing $2 pi slash L$; states
-below $epsilon$ fill a $d$-ball of radius $k = sqrt(epsilon)$:
-$ N(epsilon) = g_s (V V_d k^d)/((2 pi)^d) quad -> quad alpha = d/2 - 1 , quad A = g_s (V V_d (d/2))/((2 pi)^d) $
-#text(size: 0.85em)[$V_d = pi^(d/2) slash Gamma(d/2 + 1)$ is the unit $d$-ball
-volume; the factor $d slash 2$ in $A$ comes from the derivative.]
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 1.6em,
+  align: (left + top, left + top),
+  [
+    #text(fill: gray)[*Discrete*]
 
-*Trap* --- tuples with $sum n_i <= epsilon slash ℏ omega$ fill a $d$-simplex:
-$ N(epsilon) = g_s/(d!) (epsilon slash ℏ omega)^d quad -> quad alpha = d - 1 , quad A = g_s/((d - 1)! (ℏ omega)^d) $
+    #text(size: 0.8em)[Separate levels with gaps, e.g. $epsilon = n^2$ in a 1D box. $Z_N$ needs an enumeration or a recursion over the list. Acts II and III use this as the exact check.]
+  ],
+  [
+    #text(fill: gray)[*Continuum*]
 
-*Continuum* --- levels so dense that $sum_i -> integral g(epsilon) dif epsilon$.
+    #text(size: 0.8em)[Levels dense on the scale of $T$. The sum becomes an integral:]
+    $ sum_i F(epsilon_i) -> integral_0^infinity g(epsilon) F(epsilon) dif epsilon $
+  ],
+)
+// P1, 45 s. Three short lines, then discrete against continuum.
+
+== Density of States
+
+Count the states below $epsilon$, then differentiate, $g(epsilon) = dif N slash dif epsilon$.
+
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 1.6em,
+  align: (left + top, left + top),
+  [
+    #text(fill: gray)[*Box* --- $k$-points in a $d$-ball of radius $sqrt(epsilon)$]
+    $ N(epsilon) = g_s V / (2 pi)^d thin V_d thin epsilon^(d slash 2) , quad V_d = pi^(d slash 2) / Gamma(d slash 2 + 1) $
+  ],
+  [
+    #text(fill: gray)[*Trap* --- integer points in a $d$-simplex]
+    $ N(epsilon) = g_s epsilon^d / d! $
+  ],
+)
+
+#grid(
+  columns: (1fr, 1.6fr),
+  column-gutter: 1.6em,
+  align: (center + horizon, center + horizon),
+  box(stroke: 1pt, inset: 8pt, $g(epsilon) = A thin epsilon^alpha$),
+  table(
+    columns: (auto, auto, auto),
+    align: (center,) * 3,
+    stroke: none,
+    table.hline(stroke: 0.8pt),
+    [], [*$alpha$*], [*$A$*],
+    table.hline(stroke: 0.4pt),
+    [box], [$d slash 2 - 1$], [$g_s V V_d (d slash 2) slash (2 pi)^d$],
+    [trap], [$d - 1$], [$g_s slash (d - 1)!$],
+    table.hline(stroke: 0.8pt),
+  ),
+)
 
 #v(0.3em)
-#text(fill: blue)[
-  Trap in $d$ dims $equiv$ box in $2d$ dims: same $alpha$, different $A$ ---
-  the power law matches, the thermodynamics does not.
-]
-// P1, 75 s. Both derivations, one linear read: count, differentiate, done.
+#text(fill: blue, size: 0.8em)[A trap in $d$ has the $alpha$ of a box in $2d$, with a different $A$. The power law matches. The numbers do not.]
+// P1, 70 s. The d/2 in A comes from the derivative.
 
-]
-== The numbers at $N = 1000$
+== Fermi Energy and Ground State
 
-#block(breakable:false)[
-Operating point: box $V = 100$, trap $ℏ omega = 1$, with
-$E_0 = ((alpha+1)/(alpha+2)) N epsilon_F$.
+At $T = 0$ the states fill up to $epsilon_F$:
 
-#align(center, table(
-  columns: (auto, auto, auto, auto),
-  align: (center,) * 4,
+$ N = A / (alpha + 1) epsilon_F^(alpha + 1) quad => quad epsilon_F = ((alpha + 1) N / A)^(1 slash (alpha + 1)) , quad E_0 = (alpha + 1) / (alpha + 2) N epsilon_F $
+
+#align(center, text(size: 0.85em, table(
+  columns: (auto,) * 6,
+  align: (center,) * 6,
   stroke: none,
+  inset: (x: 10pt, y: 4pt),
   table.hline(stroke: 0.8pt),
-  [case], [$alpha$], [$epsilon_F$], [$E_0$],
+  [*case*], [*$alpha$*], [*$A$*], [*$epsilon_F$*], [*$E_0$*], [*$g(epsilon_F)$*],
   table.hline(stroke: 0.4pt),
-  [$d = 3$ box], [0.5], [44.42], [26 650],
-  [$d = 4$ box], [1.0], [39.74], [26 490],
-  [$d = 5$ box], [1.5], [38.67], [27 620],
-  [#text(fill: blue)[$d = 6$ box]], [#text(fill: blue)[2.0]], [#text(fill: blue)[39.05]], [#text(fill: blue)[29 280]],
-  [#text(fill: blue)[trap, $d = 3$]], [#text(fill: blue)[2.0]], [#text(fill: blue)[14.42]], [#text(fill: blue)[10 820]],
-  [trap, $d = 4$], [3.0], [10.47], [8 373],
+  [$d = 3$ box], [0.5], [5.066], [44.42], [26 650], [33.77],
+  [$d = 4$ box], [1.0], [1.267], [39.74], [26 490], [50.33],
+  [$d = 5$ box], [1.5], [0.2688], [38.67], [27 620], [64.64],
+  text(fill: blue)[$d = 6$ box], text(fill: blue)[2.0], text(fill: blue)[0.05039], text(fill: blue)[39.05], text(fill: blue)[29 280], text(fill: blue)[76.83],
+  text(fill: blue)[$d = 3$ trap], text(fill: blue)[2.0], text(fill: blue)[1.000], text(fill: blue)[14.42], text(fill: blue)[10 820], text(fill: blue)[208.0],
+  [$d = 4$ trap], [3.0], [0.3333], [10.47], [8 373], [382.2],
   table.hline(stroke: 0.8pt),
-))
+)))
 
-#v(0.3em)
-#text(fill: gray, size: 0.85em)[
-  Blue rows share $alpha = 2$: identical entropy, identical Sommerfeld error
-  tables, identical convergence exponents --- a *prediction* of the
-  $(alpha, A)$ story.
+#text(fill: gray, size: 0.8em)[$N = 1000$, box $V = 100$, trap $ℏ omega = 1$.] #h(0.5em)
+#text(fill: blue, size: 0.8em)[The blue rows share $alpha = 2$. Their $epsilon_F$ differ by $2.7 times$, yet at $E = 1.5 E_0$ both give $S = 2633.05$.]
+// P1, 40 s. Flag the alpha = 2 pair.
+
+== Sommerfeld Expansion
+
+#block(stroke: 0.6pt, inset: 10pt, radius: 3pt, width: 100%, above: 0.4em, below: 0.6em)[
+  #text(fill: gray)[*Lemma* --- for $T << mu$, where $f$ drops from 1 to 0 within $tilde T$ of $mu$]
+  $ integral_0^infinity H(epsilon) f(epsilon) dif epsilon approx integral_0^mu H(epsilon) dif epsilon + pi^2 / 6 T^2 H'(mu) $
 ]
-// P1, 45 s. Flag the alpha = 2 duplicate here.
-]
 
-== Sommerfeld, and the $alpha$ cancellation
+#grid(
+  columns: (1fr, 1.25fr),
+  column-gutter: 1.6em,
+  align: (left + top, left + top),
+  [
+    #text(fill: gray)[*$H = g$: fix $N$*]
+    $ mu(T) approx epsilon_F [1 - pi^2 / 6 alpha (T / epsilon_F)^2] $
+    #text(size: 0.8em)[The slope carries $alpha$: its sign is $-"sign"(alpha)$.]
+  ],
+  [
+    #text(fill: gray)[*$H = epsilon g$: the energy*]
+    $ U approx E_0 + pi^2 / 6 g(epsilon_F) T^2 [underbrace((alpha + 1), "explicit") - underbrace(alpha, "via" mu(T))] $
+    #text(size: 0.8em)[The two $alpha$ terms cancel exactly at order $T^2$.]
+  ],
+)
 
-#block(breakable:false)[
-#text(fill: gray)[*Lemma*] (for $T dot.c mu$): #text(fill: gray)[integrate by parts, expand $H$ about $mu$]
-
-#align(center, $ integral_0^infinity H(epsilon) f(epsilon) dif epsilon approx integral_0^mu H(epsilon) dif epsilon + (pi^2/6) T^2 H'(mu) $)
-
-#text(fill: gray)[*Cancellation*] (take $H = epsilon g$): #text(fill: gray)[the $alpha$ from $mu(T)$ cancels the explicit $alpha$]
-
-#align(center, $ U(T) approx E_0 + (pi^2/6) g(epsilon_F) T^2 , quad C_V = (pi^2/3) g(epsilon_F) T $)
-]
-// P1, 60 s. One line each; mu(T) and the slope mechanism are spoken.
+#align(center, box(stroke: 1pt, inset: 8pt, $U = E_0 + pi^2 / 6 g(epsilon_F) T^2 , quad C_V = S = pi^2 / 3 g(epsilon_F) T$))
+// P1, 70 s. mu remembers alpha. U, C_V and S see only g(eps_F).
 
 #figure-slide(
-  image("figures/mu_vs_T.png", width: 75%),
-  caption: [$d = 1$ rises, $d = 2$ is flat, $d >= 3$ falls: the slope sign flips with $alpha$.],
+  image("figures/mu_vs_T.png", width: 70%),
+  title: [Chemical Potential against Temperature],
+  caption: [Low-$T$ slope sign is $-"sign"(alpha)$: $d = 1$ rises, $d = 2$ starts flat, $d >= 3$ falls.],
 )
-// P1, 45 s. Figure 4 alone; the closing line is spoken from memory.
+
+#figure-slide(
+  image("figures/sommerfeld_error.png", width: 72%),
+  title: [Error of the Closed Forms, by Dimension],
+  caption: [Relative error of $mu$, $U$ and $C_V$ against $T slash epsilon_F$ for the six cases. Gray lines mark 1% and 5%: the error falls as $d$ grows, and the $d = 6$ box matches the $d = 3$ trap exactly ($alpha = 2$).],
+)
+// P1, 25 s. C_V is the strictest form. Fine print of the boxed result.
+
+// P1, 30 s. Closing line from memory: "Two parameters, all of thermodynamics."
 
 // ------------------------------------------------------------
 //  ACT II --- P2 --- 5:00
@@ -285,13 +347,13 @@ Higher $d$ converges *slower*. The gap falls off as plain $1 slash N$ as $alpha 
 // where ΔN² = T g(eps_F) fails. Verify you are still degenerate.
 
 #figure-slide(
-  image("../figures/alpha_convergence.png", width: 68%),
+  image("figures/alpha_convergence.png", width: 68%),
   title: [Higher $alpha$ converges slower],
   caption: [Gap against $N$ at fixed absolute $T$. Fitted slopes are $-1.97$, $-1.46$, $-1.29$, $-1.20$ against the predicted $-2$, $-1.5$, $-1.33$, $-1.25$.],
 )
 
 #figure-slide(
-  image("../figures/fluctuation_scaling.png", width: 68%),
+  image("figures/fluctuation_scaling.png", width: 68%),
   title: [Jensen Gap],
   caption: [$Delta N slash N prop N^(-1 slash 2)$ at fixed $T slash epsilon_F = 0.1$, for every $d$. The square of this curve gives the $1 slash N$ in the gap.],
 )
