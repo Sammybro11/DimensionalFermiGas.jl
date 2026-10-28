@@ -32,27 +32,105 @@
 // ------------------------------------------------------------
 #section-slide[What controls the gas]
 
-== The claim
-// One-sentence claim, both halves.
-// P1, 40 s.
+== The system, and the claim
 
-== The system, the units, the scope
-// P1, 45 s.
+#block(breakable:false)[
+
+A Fermi gas in $d$ dimensions is not $d$ separate problems: the dimension
+enters only through the density of states, $g(epsilon) = A epsilon^alpha$.
+Two numbers fix every thermodynamic quantity.
+
+$N$ non-interacting spin-$1 slash 2$ fermions in a $d$-dimensional box,
+$V = L^d$ #text(fill: gray)[(plus a harmonic trap, frequency $omega$, as a
+second dial on $alpha$)]. The single-particle levels are
+
+#align(center, $ epsilon = (ℏ^2 k^2)/(2m), quad k = (2 pi)/L (n_1, ..., n_d), quad n_i = 1, 2, ... $)
+
+#text(fill: gray)[*Units*] --- $ℏ^2 slash 2m = 1$, $k_B = 1$, so $epsilon = k^2$; entropy is dimensionless and $T$ carries units of energy.
+
+#text(fill: gray)[*Scope*] --- non-interacting, one species, thermodynamic
+limit $N, V -> infinity$ at fixed $N slash V$, with $d = 1, ..., 6$ #text(fill: gray)[(the thermodynamics never sees $d$ directly, only $alpha$; $d = 6$ is just a larger $alpha$)].
+// P1, 60 s. Claim first, then everything the audience needs on one slide.
+
+]
 
 == The DOS gives two parameters
-// alpha and A, box and trap.
-// P1, 60 s.
 
+#block(breakable:false)[
+
+*Box* --- allowed $k$ lie on a lattice of spacing $2 pi slash L$; states
+below $epsilon$ fill a $d$-ball of radius $k = sqrt(epsilon)$:
+$ N(epsilon) = g_s (V V_d k^d)/((2 pi)^d) quad -> quad alpha = d/2 - 1 , quad A = g_s (V V_d (d/2))/((2 pi)^d) $
+#text(size: 0.85em)[$V_d = pi^(d/2) slash Gamma(d/2 + 1)$ is the unit $d$-ball
+volume; the factor $d slash 2$ in $A$ comes from the derivative.]
+
+*Trap* --- tuples with $sum n_i <= epsilon slash ℏ omega$ fill a $d$-simplex:
+$ N(epsilon) = g_s/(d!) (epsilon slash ℏ omega)^d quad -> quad alpha = d - 1 , quad A = g_s/((d - 1)! (ℏ omega)^d) $
+
+#v(0.3em)
+#text(fill: blue)[
+  Trap in $d$ dims $equiv$ box in $2d$ dims: same $alpha$, different $A$ ---
+  the power law matches, the thermodynamics does not.
+]
+// P1, 75 s. Both derivations, one linear read: count, differentiate, done.
+
+]
 == The numbers at $N = 1000$
-// Table: alpha, eps_F, E0 for six cases.
+
+#block(breakable:false)[
+Operating point: box $V = 100$, trap $ℏ omega = 1$, with
+$E_0 = ((alpha+1)/(alpha+2)) N epsilon_F$.
+
+#align(center, table(
+  columns: (auto, auto, auto, auto),
+  align: (center,) * 4,
+  stroke: none,
+  table.hline(stroke: 0.8pt),
+  [case], [$alpha$], [$epsilon_F$], [$E_0$],
+  table.hline(stroke: 0.4pt),
+  [$d = 3$ box], [0.5], [44.42], [26 654],
+  [$d = 4$ box], [1.0], [39.74], [26 492],
+  [$d = 5$ box], [1.5], [38.67], [27 625],
+  [#text(fill: blue)[$d = 6$ box]], [#text(fill: blue)[2.0]], [#text(fill: blue)[39.05]], [#text(fill: blue)[29 285]],
+  [#text(fill: blue)[trap, $d = 3$]], [#text(fill: blue)[2.0]], [#text(fill: blue)[14.42]], [#text(fill: blue)[10 817]],
+  [trap, $d = 4$], [3.0], [10.47], [8 373],
+  table.hline(stroke: 0.8pt),
+))
+
+#v(0.3em)
+#text(fill: gray, size: 0.85em)[
+  Blue rows share $alpha = 2$: identical entropy, identical Sommerfeld error
+  tables, identical convergence exponents --- a *prediction* of the
+  $(alpha, A)$ story.
+]
 // P1, 45 s. Flag the alpha = 2 duplicate here.
+]
 
 == Sommerfeld, and why $alpha$ cancels
-// U is universal, mu is not.
-// P1, 75 s. Core of Act I.
+
+#block(breakable:false)[
+For $T dot.c mu$: integrate by parts and expand $H$ about $mu$,
+
+#align(center, $ integral_0^infinity H(epsilon) f(epsilon) dif epsilon approx integral_0^mu H(epsilon) dif epsilon + (pi^2/6) T^2 H'(mu) $)
+
+*Take $H = g$* (fixes $N$):
+$mu(T) approx epsilon_F [1 - (pi^2/6) alpha (T slash epsilon_F)^2]$.
+$mu$ is *not* universal --- rising DOS ($alpha > 0$) forces $mu$ down,
+falling ($alpha < 0$, the $d = 1$ box) forces it up, flat ($alpha = 0$,
+$d = 2$) holds it.
+
+*Take $H = epsilon g$*: the $alpha$ inherited from $mu(T)$ cancels the
+explicit $alpha$, so $U$ *is* universal,
+
+#align(center, $ U(T) approx E_0 + (pi^2/6) g(epsilon_F) T^2 $)
+
+one form, every dimension. Then $C_V = S = (pi^2/3) g(epsilon_F) T$,
+linear in $T$ for any power-law DOS.
+]
+// P1, 75 s. Core of Act I. U is universal, mu is not.
 
 #figure-slide(
-  image("../figures/mu_vs_T.png", width: 80%),
+  image("figures/mu_vs_T.png", width: 75%),
   title: [The sign of the slope flips with $alpha$],
   caption: [$d = 1$ rises. $d = 2$ is flat. $d >= 3$ falls.],
 )
@@ -68,7 +146,7 @@
 // P2, 60 s.
 
 #figure-slide(
-  image("../figures/microcanonical_T_convergence.png", width: 70%),
+  image("figures/microcanonical_T_convergence.png", width: 70%),
   title: [Boltzmann against Gibbs: the estimator sets the offset],
   caption: [Beyond $L = 60$ the two conventions bracket $T_0$.],
 )
@@ -228,14 +306,14 @@ Higher $d$ converges *slower*. The gap falls off as plain $1 slash N$ as $alpha 
 // where ΔN² = T g(eps_F) fails. Verify you are still degenerate.
 
 #figure-slide(
-  image("../figures/fluctuation_scaling.png", width: 68%),
+  image("figures/fluctuation_scaling.png", width: 68%),
   title: [Jensen Gap],
   caption: [$Delta N slash N prop N^(-1 slash 2)$ at fixed $T slash epsilon_F = 0.1$, for every $d$. The square of this curve gives the $1 slash N$ in the gap.],
 )
 
 
 #figure-slide(
-  image("../figures/exact_convergence.png", width: 68%),
+  image("figures/exact_convergence.png", width: 68%),
   title: [The gap is real, and it closes],
   caption: [Exact $⟨E⟩_"gc"$ against exact $⟨E⟩_C$ for 1D boxes. Both sides are separate computations. They disagree at small $L$ and converge as $L$ grows.],
 )
@@ -254,7 +332,7 @@ Higher $d$ converges *slower*. The gap falls off as plain $1 slash N$ as $alpha 
 
 #ending-slide(
   title: [Questions?],
-  contact: ("email@example.com", "github.com/username"),
+  contact: ("https://github.com/Sammybro11/DimensionalFermiGas.jl", ),
 )
 
 // ============================================================
@@ -268,7 +346,7 @@ Higher $d$ converges *slower*. The gap falls off as plain $1 slash N$ as $alpha 
 // If asked. The T^2 forms are strictest for C_V.
 
 #figure-slide(
-  image("../figures/caloric_curve.png", width: 80%),
+  image("figures/caloric_curve.png", width: 80%),
   title: [Backup: caloric curves],
   caption: [Numeric inversion against the inverted Sommerfeld $U(T)$.],
 )
