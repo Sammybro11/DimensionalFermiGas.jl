@@ -174,6 +174,7 @@ Lorem Ipsum
 ]
 
 For fermions, we know the fermi function is responsible for state occupation in the ensemble and by applying the macroscopic limit we may use a continuous approximation,
+#v(0.3em)
 #block(stroke: 0.6pt, inset: 10pt, radius: 3pt, width: 100%, above: 0.4em, below: 0.8em)[
   #text(fill: gray)[*Grand canonical* --- fixed $(mu, T, V)$]
   $ Xi(mu, T) = sum_(N=0)^infinity Z_N e^(mu N slash T) = product_i (1 + e^(-(epsilon_i - mu) slash T)) $
@@ -182,7 +183,7 @@ For fermions, we know the fermi function is responsible for state occupation in 
 
 == Canonical Ensemble
 
-The canonical sum needs the state count. That is the number of ways to put $N$ fermions on the levels with total energy $E$. The count of combinations grows exponentially with $N$. Enumeration works for four levels. It fails for $N = 1000$.
+The canonical sum needs the state count. That is the number of ways to put $N$ fermions on the levels with total energy $E$. The count of combinations grows exponentially with $N$.
 
 #grid(
   columns: (1fr, 1fr),
@@ -306,7 +307,13 @@ Higher $d$ converges *slower*. The gap falls off as plain $1 slash N$ as $alpha 
 // where ΔN² = T g(eps_F) fails. Verify you are still degenerate.
 
 #figure-slide(
-  image("figures/fluctuation_scaling.png", width: 68%),
+  image("../figures/alpha_convergence.png", width: 68%),
+  title: [Higher $alpha$ converges slower],
+  caption: [Gap against $N$ at fixed absolute $T$. Fitted slopes are $-1.97$, $-1.46$, $-1.29$, $-1.20$ against the predicted $-2$, $-1.5$, $-1.33$, $-1.25$.],
+)
+
+#figure-slide(
+  image("../figures/fluctuation_scaling.png", width: 68%),
   title: [Jensen Gap],
   caption: [$Delta N slash N prop N^(-1 slash 2)$ at fixed $T slash epsilon_F = 0.1$, for every $d$. The square of this curve gives the $1 slash N$ in the gap.],
 )
@@ -319,19 +326,9 @@ Higher $d$ converges *slower*. The gap falls off as plain $1 slash N$ as $alpha 
 )
 // P3, 45 s.
 
-== Findings
-
-+ *Equivalence is a limit, and the approach is dimension-dependent.* The gap closes as $N^(-p)$ with $p = (alpha+2) slash (alpha+1)$. At $alpha = 0$ the gap falls as an inverse square. Large $alpha$ gives $1 slash N$.
-
-+ *A fixed mean leaves the width free.* $mu$ constrains $⟨N⟩$ and nothing else. Any quantity that is nonlinear in $N$ then picks up $1/2 partial_N^2 (dot) thin Δ N^2$. For extensive quantities this correction is a relative term of order $N^(-p)$.
-
-+ *The numerical trap.* The $f(1-f)$ integrals fail silently below $T slash epsilon_F approx 0.005$. They give a wrong answer unless $mu$ is a subdivision node.
-
-#v(0.5em)
-#text(fill: gray)[The $d = 6$ box and the $d = 3$ trap share $alpha = 2$. They share every convergence exponent and coefficient. This result follows from $alpha$ alone, so it is a prediction. See Act I for detail.]
-
 #ending-slide(
-  title: [Questions?],
+  title: [Thank You],
+  subtitle: [Questions?],
   contact: ("https://github.com/Sammybro11/DimensionalFermiGas.jl", ),
 )
 
