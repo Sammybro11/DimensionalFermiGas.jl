@@ -346,7 +346,7 @@ Higher $d$ converges *slower*. The gap falls off as plain $1 slash N$ as $alpha 
 // If asked. The T^2 forms are strictest for C_V.
 
 #figure-slide(
-  image("figures/caloric_curve.png", width: 80%),
+  image("figures/caloric_curve.png", width: 75%),
   title: [Backup: caloric curves],
   caption: [Numeric inversion against the inverted Sommerfeld $U(T)$.],
 )
