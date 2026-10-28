@@ -281,8 +281,6 @@ $E prop N^p$, $quad p = 1 + 1 slash (alpha+1) = (alpha+2) slash (alpha+1)$, $qua
 
 Higher $d$ converges *slower*. The gap falls off as plain $1 slash N$ as $alpha -> infinity$. This runs *opposite* to the Sommerfeld errors, which improve with $d$.
 
-#text(fill: red)[Hold the ratio of $T$ to $epsilon_F$ fixed. The plot then shows a set of parallel lines of slope $-1$. The protocol sets the exponent. The gas only shifts the offset. So the plot hides everything.]
-
 // P3, 60 s. Caveat: at fixed absolute T, large alpha pushes the gas non-degenerate,
 // where ΔN² = T g(eps_F) fails. Verify you are still degenerate.
 
