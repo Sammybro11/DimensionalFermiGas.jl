@@ -27,7 +27,7 @@
 // ------------------------------------------------------------
 //  ACT I --- P1 --- 5:00
 // ------------------------------------------------------------
-#section-slide[What controls the gas]
+#section-slide[System Description]
 
 == The system, the units, the scope
 
@@ -249,7 +249,7 @@ We expand about the mean. The linear term averages to zero by definition of the 
 
 == Forms of Convergence
 
-$E prop N^p$, $quad p = 1 + 1 slash (alpha+1) = (alpha+2) slash (alpha+1)$, $quad Δ N^2 slash N^2 = (alpha+1) T slash (N epsilon_F)$
+$E prop N^p$, $quad p = 1 + (1)/(alpha+1) = (alpha+2)/(alpha+1)$, $quad (Delta N^2)/(N^2) prop (T)/(N epsilon_F)$
 
 #grid(
   columns: (1fr, 1fr),
